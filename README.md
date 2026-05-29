@@ -22,6 +22,12 @@ powershell -ExecutionPolicy Bypass -File .\VoipExtensionModule.ps1
 
 No third-party packages are required.
 
+Optional Python prototype:
+
+```powershell
+python .\voip_extension_module.py
+```
+
 ## Typical workflow
 
 1. Open your VOIP desktop application.
