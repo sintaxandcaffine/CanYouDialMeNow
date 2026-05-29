@@ -20,13 +20,7 @@ Double-click `Launch-VoipExtensionModule.bat`, or run:
 powershell -ExecutionPolicy Bypass -File .\VoipExtensionModule.ps1
 ```
 
-Optional Python version, if Python is installed:
-
-```powershell
-python .\voip_extension_module.py
-```
-
-Neither version requires third-party packages.
+No third-party packages are required.
 
 ## Typical workflow
 
