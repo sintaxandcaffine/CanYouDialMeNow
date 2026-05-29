@@ -352,9 +352,9 @@ $Timer.Interval = 250
 $Timer.Add_Tick({
     $hwnd = [Win32CanYouDialMeNow]::GetForegroundWindow()
     if ($hwnd -ne [IntPtr]::Zero) {
-        [uint32]$pid = 0
-        [Win32CanYouDialMeNow]::GetWindowThreadProcessId($hwnd, [ref]$pid) | Out-Null
-        if ($pid -ne $OwnProcessId) { $script:LastExternalWindow = $hwnd }
+        [uint32]$foregroundProcessId = 0
+        [Win32CanYouDialMeNow]::GetWindowThreadProcessId($hwnd, [ref]$foregroundProcessId) | Out-Null
+        if ($foregroundProcessId -ne $OwnProcessId) { $script:LastExternalWindow = $hwnd }
     }
 })
 
