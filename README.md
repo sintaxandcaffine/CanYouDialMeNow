@@ -14,7 +14,9 @@ A lightweight Windows desktop sidecar for cataloging special extensions like con
 
 Recommended on Windows:
 
-Double-click `Launch-VoipExtensionModule.bat`, or run:
+Double-click `Launch-VoipExtensionModule.vbs` to launch without a console window.
+
+You can also run:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\VoipExtensionModule.ps1

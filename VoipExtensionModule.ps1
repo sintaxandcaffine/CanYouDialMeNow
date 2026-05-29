@@ -343,7 +343,7 @@ function Apply-AppTheme {
 
 function Set-AppLayout {
     $margin = 18
-    $gap = 10
+    $gap = 16
     $clientWidth = $Form.ClientSize.Width
     $clientHeight = $Form.ClientSize.Height
     $right = $clientWidth - $margin
@@ -365,7 +365,7 @@ function Set-AppLayout {
     $SearchLabel.Location = New-Object System.Drawing.Point($margin, 19)
     $SearchLabel.Size = New-Object System.Drawing.Size(48, 22)
     $SearchBox.Location = New-Object System.Drawing.Point(($margin + 54), 16)
-    $SearchBox.Size = New-Object System.Drawing.Size(([Math]::Max(160, $GroupLabel.Left - $SearchBox.Left - $gap)), 24)
+    $SearchBox.Size = New-Object System.Drawing.Size(([Math]::Max(72, $GroupLabel.Left - $SearchBox.Left - $gap)), 24)
 
     $CopyOnlyCheck.Location = New-Object System.Drawing.Point($margin, 52)
     $CopyOnlyCheck.Size = New-Object System.Drawing.Size(110, 24)
@@ -390,7 +390,7 @@ function Set-AppLayout {
 $Form = New-Object System.Windows.Forms.Form
 $Form.Text = $AppTitle
 $Form.StartPosition = "CenterScreen"
-$Form.MinimumSize = New-Object System.Drawing.Size(760, 480)
+$Form.MinimumSize = New-Object System.Drawing.Size(700, 480)
 $Form.Size = New-Object System.Drawing.Size(900, 560)
 $Form.Font = New-Object System.Drawing.Font("Segoe UI", 9)
 
@@ -402,48 +402,48 @@ $Form.Controls.Add($SearchLabel)
 
 $SearchBox = New-Object System.Windows.Forms.TextBox
 $SearchBox.Location = New-Object System.Drawing.Point(64, 14)
-$SearchBox.Anchor = "Top,Left,Right"
+$SearchBox.Anchor = "Top,Left"
 $SearchBox.Size = New-Object System.Drawing.Size(330, 24)
 $Form.Controls.Add($SearchBox)
 
 $GroupLabel = New-Object System.Windows.Forms.Label
 $GroupLabel.Text = "Group"
-$GroupLabel.Anchor = "Top,Right"
+$GroupLabel.Anchor = "Top,Left"
 $GroupLabel.Location = New-Object System.Drawing.Point(410, 18)
 $GroupLabel.Size = New-Object System.Drawing.Size(48, 22)
 $Form.Controls.Add($GroupLabel)
 
 $GroupCombo = New-Object System.Windows.Forms.ComboBox
 $GroupCombo.DropDownStyle = "DropDownList"
-$GroupCombo.Anchor = "Top,Right"
+$GroupCombo.Anchor = "Top,Left"
 $GroupCombo.Location = New-Object System.Drawing.Point(462, 14)
 $GroupCombo.Size = New-Object System.Drawing.Size(150, 24)
 $Form.Controls.Add($GroupCombo)
 
 $AddButton = New-Object System.Windows.Forms.Button
 $AddButton.Text = "Add"
-$AddButton.Anchor = "Top,Right"
+$AddButton.Anchor = "Top,Left"
 $AddButton.Location = New-Object System.Drawing.Point(622, 12)
 $AddButton.Size = New-Object System.Drawing.Size(54, 28)
 $Form.Controls.Add($AddButton)
 
 $ImportButton = New-Object System.Windows.Forms.Button
 $ImportButton.Text = "Import"
-$ImportButton.Anchor = "Top,Right"
+$ImportButton.Anchor = "Top,Left"
 $ImportButton.Location = New-Object System.Drawing.Point(682, 12)
 $ImportButton.Size = New-Object System.Drawing.Size(58, 28)
 $Form.Controls.Add($ImportButton)
 
 $ExportButton = New-Object System.Windows.Forms.Button
 $ExportButton.Text = "Export"
-$ExportButton.Anchor = "Top,Right"
+$ExportButton.Anchor = "Top,Left"
 $ExportButton.Location = New-Object System.Drawing.Point(746, 12)
 $ExportButton.Size = New-Object System.Drawing.Size(58, 28)
 $Form.Controls.Add($ExportButton)
 
 $ThemeButton = New-Object System.Windows.Forms.Button
 $ThemeButton.Text = "Light mode"
-$ThemeButton.Anchor = "Top,Right"
+$ThemeButton.Anchor = "Top,Left"
 $ThemeButton.Location = New-Object System.Drawing.Point(812, 12)
 $ThemeButton.Size = New-Object System.Drawing.Size(92, 28)
 $Form.Controls.Add($ThemeButton)
