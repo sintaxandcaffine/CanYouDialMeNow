@@ -342,8 +342,10 @@ function Apply-AppTheme {
 }
 
 function Set-AppLayout {
-    $margin = 18
-    $gap = 16
+    $isCompact = $Form.ClientSize.Width -lt 820
+    $isTiny = $Form.ClientSize.Width -lt 560
+    $margin = $(if ($isTiny) { 12 } elseif ($isCompact) { 14 } else { 18 })
+    $gap = $(if ($isTiny) { 8 } elseif ($isCompact) { 10 } else { 16 })
     $clientWidth = $Form.ClientSize.Width
     $clientHeight = $Form.ClientSize.Height
     $right = $clientWidth - $margin
@@ -354,31 +356,63 @@ function Set-AppLayout {
     $AddButton.Size = New-Object System.Drawing.Size(56, 28)
     $GroupCombo.Size = New-Object System.Drawing.Size(132, 24)
 
-    $ThemeButton.Location = New-Object System.Drawing.Point(($right - $ThemeButton.Width), 14)
-    $ExportButton.Location = New-Object System.Drawing.Point(($ThemeButton.Left - $gap - $ExportButton.Width), 14)
-    $ImportButton.Location = New-Object System.Drawing.Point(($ExportButton.Left - $gap - $ImportButton.Width), 14)
-    $AddButton.Location = New-Object System.Drawing.Point(($ImportButton.Left - $gap - $AddButton.Width), 14)
-    $GroupCombo.Location = New-Object System.Drawing.Point(($AddButton.Left - $gap - $GroupCombo.Width), 16)
-    $GroupLabel.Location = New-Object System.Drawing.Point(($GroupCombo.Left - 54), 19)
-    $GroupLabel.Size = New-Object System.Drawing.Size(48, 22)
-
     $SearchLabel.Location = New-Object System.Drawing.Point($margin, 19)
     $SearchLabel.Size = New-Object System.Drawing.Size(48, 22)
     $SearchBox.Location = New-Object System.Drawing.Point(($margin + 54), 16)
-    $SearchBox.Size = New-Object System.Drawing.Size(([Math]::Max(72, $GroupLabel.Left - $SearchBox.Left - $gap)), 24)
 
-    $CopyOnlyCheck.Location = New-Object System.Drawing.Point($margin, 52)
-    $CopyOnlyCheck.Size = New-Object System.Drawing.Size(110, 24)
+    if ($isCompact) {
+        $SearchBox.Size = New-Object System.Drawing.Size(([Math]::Max(96, $clientWidth - ($margin * 2) - 54)), 24)
+
+        $GroupLabel.Location = New-Object System.Drawing.Point($margin, 52)
+        $GroupLabel.Size = New-Object System.Drawing.Size(48, 22)
+        $ThemeButton.Location = New-Object System.Drawing.Point(($right - $ThemeButton.Width), 48)
+        $GroupCombo.Location = New-Object System.Drawing.Point(($margin + 54), 50)
+        $GroupCombo.Size = New-Object System.Drawing.Size(([Math]::Max(112, $ThemeButton.Left - $GroupCombo.Left - $gap)), 24)
+
+        $CopyOnlyCheck.Location = New-Object System.Drawing.Point($margin, 84)
+        $CopyOnlyCheck.Size = New-Object System.Drawing.Size(104, 24)
+
+        $ExportButton.Location = New-Object System.Drawing.Point(($right - $ExportButton.Width), 82)
+        $ImportButton.Location = New-Object System.Drawing.Point(($ExportButton.Left - $gap - $ImportButton.Width), 82)
+        $AddButton.Location = New-Object System.Drawing.Point(($ImportButton.Left - $gap - $AddButton.Width), 82)
+        $gridY = 124
+    } else {
+        $ThemeButton.Location = New-Object System.Drawing.Point(($right - $ThemeButton.Width), 14)
+        $ExportButton.Location = New-Object System.Drawing.Point(($ThemeButton.Left - $gap - $ExportButton.Width), 14)
+        $ImportButton.Location = New-Object System.Drawing.Point(($ExportButton.Left - $gap - $ImportButton.Width), 14)
+        $AddButton.Location = New-Object System.Drawing.Point(($ImportButton.Left - $gap - $AddButton.Width), 14)
+        $GroupCombo.Location = New-Object System.Drawing.Point(($AddButton.Left - $gap - $GroupCombo.Width), 16)
+        $GroupLabel.Location = New-Object System.Drawing.Point(($GroupCombo.Left - 54), 19)
+        $GroupLabel.Size = New-Object System.Drawing.Size(48, 22)
+        $SearchBox.Size = New-Object System.Drawing.Size(([Math]::Max(72, $GroupLabel.Left - $SearchBox.Left - $gap)), 24)
+
+        $CopyOnlyCheck.Location = New-Object System.Drawing.Point($margin, 52)
+        $CopyOnlyCheck.Size = New-Object System.Drawing.Size(110, 24)
+        $gridY = 88
+    }
+
+    $Grid.Columns["Favorite"].Visible = $clientWidth -ge 500
+    $Grid.Columns["Team"].Visible = $clientWidth -ge 620
+    $Grid.Columns["Notes"].Visible = $clientWidth -ge 760
 
     $buttonY = $clientHeight - 62
-    $DeleteButton.Size = New-Object System.Drawing.Size(94, 30)
-    $EditButton.Size = New-Object System.Drawing.Size(82, 30)
-    $DialButton.Size = New-Object System.Drawing.Size(116, 30)
-    $DeleteButton.Location = New-Object System.Drawing.Point(($right - $DeleteButton.Width), $buttonY)
-    $EditButton.Location = New-Object System.Drawing.Point(($DeleteButton.Left - $gap - $EditButton.Width), $buttonY)
-    $DialButton.Location = New-Object System.Drawing.Point(($EditButton.Left - $gap - $DialButton.Width), $buttonY)
+    if ($isTiny) {
+        $buttonWidth = [Math]::Floor(($clientWidth - ($margin * 2) - ($gap * 2)) / 3)
+        $DialButton.Size = New-Object System.Drawing.Size($buttonWidth, 30)
+        $EditButton.Size = New-Object System.Drawing.Size($buttonWidth, 30)
+        $DeleteButton.Size = New-Object System.Drawing.Size($buttonWidth, 30)
+        $DialButton.Location = New-Object System.Drawing.Point($margin, $buttonY)
+        $EditButton.Location = New-Object System.Drawing.Point(($DialButton.Right + $gap), $buttonY)
+        $DeleteButton.Location = New-Object System.Drawing.Point(($EditButton.Right + $gap), $buttonY)
+    } else {
+        $DeleteButton.Size = New-Object System.Drawing.Size(94, 30)
+        $EditButton.Size = New-Object System.Drawing.Size(82, 30)
+        $DialButton.Size = New-Object System.Drawing.Size(116, 30)
+        $DeleteButton.Location = New-Object System.Drawing.Point(($right - $DeleteButton.Width), $buttonY)
+        $EditButton.Location = New-Object System.Drawing.Point(($DeleteButton.Left - $gap - $EditButton.Width), $buttonY)
+        $DialButton.Location = New-Object System.Drawing.Point(($EditButton.Left - $gap - $DialButton.Width), $buttonY)
+    }
 
-    $gridY = 88
     $gridHeight = [Math]::Max(170, $buttonY - $gridY - $gap)
     $Grid.Location = New-Object System.Drawing.Point($margin, $gridY)
     $Grid.Size = New-Object System.Drawing.Size(($clientWidth - ($margin * 2)), $gridHeight)
@@ -390,7 +424,7 @@ function Set-AppLayout {
 $Form = New-Object System.Windows.Forms.Form
 $Form.Text = $AppTitle
 $Form.StartPosition = "CenterScreen"
-$Form.MinimumSize = New-Object System.Drawing.Size(700, 480)
+$Form.MinimumSize = New-Object System.Drawing.Size(430, 520)
 $Form.Size = New-Object System.Drawing.Size(900, 560)
 $Form.Font = New-Object System.Drawing.Font("Segoe UI", 9)
 
